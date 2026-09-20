@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://baqtt61aqtda5"]
+
+[ext_resource type="Texture2D" uid="uid://cxgyht2uqi85w" path="res://tile.png" id="1_ohhpf"]
+[ext_resource type="Texture2D" uid="uid://cako8772lhecx" path="res://guy-Sheet 1.png" id="1_rpg24"]
+[ext_resource type="Script" uid="uid://c12ry4tpx3rsm" path="res://simple.gd" id="2_3vi8l"]
+[ext_resource type="Script" uid="uid://b8xn3nasyiybv" path="res://sprite_manager.gd" id="3_8rhti"]
+[ext_resource type="Texture2D" uid="uid://bekhgxb01th5f" path="res://circle.png" id="5_21bcp"]
+[ext_resource type="Script" uid="uid://b37b2h3n0b0kw" path="res://state_machine.gd" id="5_42dj3"]
+[ext_resource type="Script" uid="uid://t8prtfnf4w7c" path="res://simple_circle.gd" id="5_tpea4"]
+[ext_resource type="Script" uid="uid://c5lffweootjxw" path="res://walk_state.gd" id="6_56f15"]
+[ext_resource type="Script" uid="uid://bh3iqs5gdi67a" path="res://idle_state.gd" id="7_cho24"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c1ibt"]
+size = Vector2(273, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abq7i"]
+size = Vector2(4.5, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvq2i"]
+size = Vector2(6, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tpea4"]
+radius = 5.0
+
+[node name="Node2D" type="Node2D" unique_id=1168591918]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1958491882]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1996439882]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -6.0
+offset_right = -4.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2063401478]
+texture_repeat = 2
+position = Vector2(160, 119)
+texture = ExtResource("1_ohhpf")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 16)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D" unique_id=1892068744]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D" unique_id=791757417]
+position = Vector2(-23.5, 1)
+shape = SubResource("RectangleShape2D_c1ibt")
+
+[node name="Node2D" type="CharacterBody2D" parent="." unique_id=1432218635]
+position = Vector2(100, 100)
+script = ExtResource("2_3vi8l")
+
+[node name="SpriteManager" type="Sprite2D" parent="Node2D" unique_id=786794159]
+texture = ExtResource("1_rpg24")
+hframes = 5
+vframes = 3
+script = ExtResource("3_8rhti")
+frames_per_second = 12.0
+
+[node name="Camera2D" type="Camera2D" parent="Node2D" unique_id=841585717]
+
+[node name="Area2D" type="Area2D" parent="Node2D" unique_id=437551769]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Area2D" unique_id=1456751006]
+position = Vector2(-0.25, 2)
+shape = SubResource("RectangleShape2D_abq7i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D" unique_id=905226209]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_lvq2i")
+
+[node name="StateMachine" type="Node2D" parent="Node2D" unique_id=1556945748]
+script = ExtResource("5_42dj3")
+metadata/_custom_type_script = "uid://b37b2h3n0b0kw"
+
+[node name="WalkState" type="Node2D" parent="Node2D/StateMachine" unique_id=364598901]
+script = ExtResource("6_56f15")
+frame_numbers = Array[int]([0, 1, 2, 3])
+
+[node name="IdleState" type="Node2D" parent="Node2D/StateMachine" unique_id=1784234188]
+script = ExtResource("7_cho24")
+frame_numbers = Array[int]([10, 11, 12, 13])
+
+[node name="Circle" type="Node2D" parent="." unique_id=282111442]
+position = Vector2(133, 103)
+script = ExtResource("5_tpea4")
+
+[node name="Area2D" type="Area2D" parent="Circle" unique_id=167498448]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Circle/Area2D" unique_id=2137499839]
+shape = SubResource("CircleShape2D_tpea4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Circle" unique_id=873288799]
+texture = ExtResource("5_21bcp")
