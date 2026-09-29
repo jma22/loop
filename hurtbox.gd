@@ -1,11 +1,10 @@
-class_name HurtBox extends Area3D
+class_name HurtBox extends Area2D
 
 @export var hurt_box_type: HurtBoxType = HurtBoxType.PLAYER
-@export var hit_sound_fx : AudioStream
-@export var hit_sound : AudioStreamPlayer
-@export var time_on_hit : Node3D
+# @export var hit_sound_fx : AudioStream
+# @export var hit_sound : AudioStreamPlayer
 
-var owner_entity: CharacterBody3D
+var owner_entity: Node2D
 var is_active : bool = true
 
 enum HurtBoxType {
@@ -13,12 +12,13 @@ enum HurtBoxType {
 	ENEMY
 }
 
-func setup(owner_entity_: CharacterBody3D) -> void:
+func setup(owner_entity_: Node2D) -> void:
 	owner_entity = owner_entity_
 
 func _ready() -> void:
 	set_collision_masks()
-	hit_sound.stream = hit_sound_fx
+	set_active(true)
+	# hit_sound.stream = hit_sound_fx
 
 
 # func _on_area_exited(area: Area3D) -> void:
@@ -40,8 +40,5 @@ func set_active(active: bool) -> void:
 	self.set_deferred("monitorable", active)
 	is_active = active
 
-func activate_hitbox() -> void:
-	set_active(true)
-
-func deactivate_hitbox() -> void:
-	set_active(false)
+func get_owner_entity() -> Node2D:
+	return owner_entity

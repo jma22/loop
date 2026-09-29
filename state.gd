@@ -29,6 +29,9 @@ func deep_exit() -> void:
 		get_child_state().deep_exit()
 	exit()
 
+func check_state() -> void:
+	pass
+
 func enter() -> void:
 	pass
 
