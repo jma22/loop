@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c5lffweootjxw" path="res://walk_state.gd" id="6_56f15"]
 [ext_resource type="Script" uid="uid://bh3iqs5gdi67a" path="res://idle_state.gd" id="7_cho24"]
 [ext_resource type="Script" uid="uid://dashdxelw8gov" path="res://hurt_state.gd" id="8_dlkme"]
+[ext_resource type="Script" uid="uid://cp7wbunqs74q1" path="res://attack_swing.gd" id="9_4a7sh"]
 [ext_resource type="Script" uid="uid://cksuw4wkrbjhc" path="res://hurtbox.gd" id="9_im64q"]
 [ext_resource type="Script" uid="uid://crwqdtwmo146o" path="res://combo_parent_state.gd" id="9_sgv64"]
 [ext_resource type="Script" uid="uid://dy4axpj7871ia" path="res://attack_state.gd" id="10_gaoim"]
@@ -17,9 +18,11 @@
 [ext_resource type="Script" uid="uid://dk4n645owpngi" path="res://hitbox.gd" id="12_ytyno"]
 [ext_resource type="Script" uid="uid://cextj8c8s6ayo" path="res://health_component.gd" id="14_cs1hs"]
 [ext_resource type="Script" uid="uid://b4knadkhl40uk" path="res://InvulnerableComponent.gd" id="15_v7taj"]
+[ext_resource type="Material" uid="uid://iox8q6dxfm7p" path="res://sprite_material.tres" id="16_1uwki"]
 [ext_resource type="Script" uid="uid://bivgvccl5sjdj" path="res://knockback_component.gd" id="16_50rgw"]
 [ext_resource type="Script" uid="uid://cv1ooydccgfs8" path="res://hp_display.gd" id="16_n73o2"]
 [ext_resource type="Script" uid="uid://blba0r6ubmnpu" path="res://circle_idle_state.gd" id="18_jym3p"]
+[ext_resource type="Script" uid="uid://mooxr50lfhnw" path="res://material_controller.gd" id="22_wudxj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c1ibt"]
 size = Vector2(637, 18)
@@ -27,10 +30,14 @@ size = Vector2(637, 18)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvq2i"]
 size = Vector2(6, 8)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n73o2"]
-size = Vector2(10, 6)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4a7sh"]
+size = Vector2(16, 22)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gaoim"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_50rgw"]
+load_path = "res://.godot/imported/attack-Sheet.png-06193da8406acfbd6c320fa55e0d193f.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1uwki"]
+size = Vector2(17, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gaoim"]
 size = Vector2(7, 13)
@@ -45,11 +52,19 @@ size = Vector2(16, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abq7i"]
 size = Vector2(4.5, 8)
 
+[sub_resource type="Curve" id="Curve_wudxj"]
+_data = [Vector2(0.099999994, 1), 0.0, -21.722847, 0, 1, Vector2(0.145, 0.022471905), -21.722847, 0.0, 1, 0]
+point_count = 2
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_tpea4"]
 radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gaoim"]
 radius = 6.0
+
+[sub_resource type="Curve" id="Curve_yc71e"]
+_data = [Vector2(0.120000005, 1), 0.0, -18.876406, 0, 1, Vector2(0.17, 0.056179762), -18.876406, 0.0, 1, 0]
+point_count = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v7taj"]
 radius = 3.1622777
@@ -65,6 +80,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.98, 0.83888, 0.71540004, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2063401478]
 texture_repeat = 2
@@ -110,47 +126,65 @@ script = ExtResource("9_sgv64")
 attack_states = [NodePath("AttackState")]
 metadata/_custom_type_script = "uid://crwqdtwmo146o"
 
-[node name="AttackState" type="Node2D" parent="Node2D/StateMachine/ComboParentState" unique_id=444790870 node_paths=PackedStringArray("hitboxL", "hitboxR")]
+[node name="AttackState" type="Node2D" parent="Node2D/StateMachine/ComboParentState" unique_id=444790870 node_paths=PackedStringArray("swing_L", "swing_R")]
 script = ExtResource("10_gaoim")
-frame_numbers = Array[int]([1, 1, 1, 1])
-hitboxL = NodePath("HitBoxL")
-hitboxR = NodePath("HitBoxR")
+frame_numbers = Array[int]([1, 1, 1])
+swing_L = NodePath("AttackSwingL")
+swing_R = NodePath("AttackSwing")
 metadata/_custom_type_script = "uid://dy4axpj7871ia"
 
-[node name="HitBoxR" type="Area2D" parent="Node2D/StateMachine/ComboParentState/AttackState" unique_id=1324652692 node_paths=PackedStringArray("owner_entity", "sprite")]
+[node name="AttackSwing" type="Node2D" parent="Node2D/StateMachine/ComboParentState/AttackState" unique_id=555655256 node_paths=PackedStringArray("sprite_manager", "hitbox")]
+script = ExtResource("9_4a7sh")
+sprite_manager = NodePath("SpriteManager")
+hitbox = NodePath("HitBoxR")
+frame_numbers = Array[int]([0, 1, 2, 3, 4, 5])
+
+[node name="HitBoxR" type="Area2D" parent="Node2D/StateMachine/ComboParentState/AttackState/AttackSwing" unique_id=1324652692 node_paths=PackedStringArray("owner_entity")]
 script = ExtResource("12_ytyno")
-owner_entity = NodePath("../../../..")
+owner_entity = NodePath("../../../../..")
 hit_box_type = 1
-sprite = NodePath("Sprite2D")
 knockback_right = false
 metadata/_custom_type_script = "uid://dk4n645owpngi"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/StateMachine/ComboParentState/AttackState/HitBoxR" unique_id=1794796252]
-position = Vector2(9, 2)
-shape = SubResource("RectangleShape2D_n73o2")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/StateMachine/ComboParentState/AttackState/AttackSwing/HitBoxR" unique_id=1794796252]
+position = Vector2(12, -1)
+shape = SubResource("RectangleShape2D_4a7sh")
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D/StateMachine/ComboParentState/AttackState/HitBoxR" unique_id=1749822916]
-position = Vector2(4, -1)
-scale = Vector2(10.000005, 6)
-texture = SubResource("PlaceholderTexture2D_gaoim")
+[node name="SpriteManager" type="Sprite2D" parent="Node2D/StateMachine/ComboParentState/AttackState/AttackSwing" unique_id=2085036064]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(4, 0)
+texture = SubResource("CompressedTexture2D_50rgw")
+hframes = 11
+script = ExtResource("3_8rhti")
+frames_per_second = 24.0
+metadata/_custom_type_script = "uid://b8xn3nasyiybv"
 
-[node name="HitBoxL" type="Area2D" parent="Node2D/StateMachine/ComboParentState/AttackState" unique_id=2084982564 node_paths=PackedStringArray("owner_entity", "sprite")]
-position = Vector2(-18.09, 0)
+[node name="AttackSwingL" type="Node2D" parent="Node2D/StateMachine/ComboParentState/AttackState" unique_id=1044725943 node_paths=PackedStringArray("sprite_manager", "hitbox")]
+script = ExtResource("9_4a7sh")
+sprite_manager = NodePath("SpriteManager")
+hitbox = NodePath("HitBoxR")
+frame_numbers = Array[int]([0, 1, 2, 3, 4, 5])
+
+[node name="HitBoxR" type="Area2D" parent="Node2D/StateMachine/ComboParentState/AttackState/AttackSwingL" unique_id=2054567104 node_paths=PackedStringArray("owner_entity")]
 script = ExtResource("12_ytyno")
-owner_entity = NodePath("../../../..")
+owner_entity = NodePath("../../../../..")
 hit_box_type = 1
-sprite = NodePath("Sprite2D")
 knockback_right = false
 metadata/_custom_type_script = "uid://dk4n645owpngi"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/StateMachine/ComboParentState/AttackState/HitBoxL" unique_id=1300785692]
-position = Vector2(9, 2)
-shape = SubResource("RectangleShape2D_n73o2")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/StateMachine/ComboParentState/AttackState/AttackSwingL/HitBoxR" unique_id=649247270]
+position = Vector2(-12.5, -1)
+shape = SubResource("RectangleShape2D_1uwki")
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D/StateMachine/ComboParentState/AttackState/HitBoxL" unique_id=1403475022]
-position = Vector2(4, -1)
-scale = Vector2(10.000005, 6)
-texture = SubResource("PlaceholderTexture2D_gaoim")
+[node name="SpriteManager" type="Sprite2D" parent="Node2D/StateMachine/ComboParentState/AttackState/AttackSwingL" unique_id=29435139]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(-4, 0)
+texture = SubResource("CompressedTexture2D_50rgw")
+flip_h = true
+hframes = 11
+script = ExtResource("3_8rhti")
+frames_per_second = 24.0
+metadata/_custom_type_script = "uid://b8xn3nasyiybv"
 
 [node name="AttackState2" type="Node2D" parent="Node2D/StateMachine/ComboParentState" unique_id=66730421]
 visible = false
@@ -215,6 +249,7 @@ metadata/_custom_type_script = "uid://cextj8c8s6ayo"
 script = ExtResource("15_v7taj")
 
 [node name="SpriteManager" type="Sprite2D" parent="Node2D/CoreComponents" unique_id=786794159]
+material = ExtResource("16_1uwki")
 texture = ExtResource("1_rpg24")
 hframes = 5
 vframes = 3
@@ -224,12 +259,13 @@ frames_per_second = 12.0
 [node name="KnockbackComponent" type="Node2D" parent="Node2D/CoreComponents" unique_id=1486543366]
 script = ExtResource("16_50rgw")
 
+[node name="MaterialController" type="Node2D" parent="Node2D/CoreComponents" unique_id=1568064962]
+script = ExtResource("22_wudxj")
+flash_curve = SubResource("Curve_wudxj")
+
 [node name="Circle" type="CharacterBody2D" parent="." unique_id=1924930601]
 position = Vector2(133, 103)
 script = ExtResource("5_tpea4")
-
-[node name="Sprite2D" type="Sprite2D" parent="Circle" unique_id=873288799]
-texture = ExtResource("5_21bcp")
 
 [node name="HitBox" type="Area2D" parent="Circle" unique_id=1538743446 node_paths=PackedStringArray("owner_entity")]
 monitoring = false
@@ -261,6 +297,16 @@ metadata/_custom_type_script = "uid://cextj8c8s6ayo"
 [node name="KnockbackComponent" type="Node2D" parent="Circle/CoreComponents" unique_id=507943960]
 script = ExtResource("16_50rgw")
 is_knockbackable = false
+
+[node name="MaterialController" type="Node2D" parent="Circle/CoreComponents" unique_id=658315150]
+script = ExtResource("22_wudxj")
+flash_curve = SubResource("Curve_yc71e")
+
+[node name="SpriteManager" type="Sprite2D" parent="Circle/CoreComponents" unique_id=950853938]
+material = ExtResource("16_1uwki")
+texture = ExtResource("5_21bcp")
+script = ExtResource("3_8rhti")
+metadata/_custom_type_script = "uid://b8xn3nasyiybv"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Circle" unique_id=1586649446]
 shape = SubResource("CircleShape2D_v7taj")

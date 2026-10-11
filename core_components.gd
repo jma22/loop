@@ -11,6 +11,7 @@ class_name CoreComponents
 # @onready var bounce_component : BounceComponent = $BounceComponent
 # @onready var shield_component : ShieldComponent = $ShieldComponent
 # @onready var enemy_status_display : EnemyStatusDisplay = $EnemyStatusDisplay
+@onready var material_controller : MaterialController = $MaterialController
 
 func setup(entity : CharacterBody2D) -> void:
 	hurt_box.setup(entity)
@@ -18,6 +19,7 @@ func setup(entity : CharacterBody2D) -> void:
 	# bounce_component.setup(entity)
 	# sprite_manager.setup(hitstop)
 	health_component.setup(entity.get_initial_health(), entity)
+	material_controller.setup(sprite_manager)
 	# status_effect_manager.setup(entity)
 	# shield_component.setup(entity)
 	# enemy_status_display.setup(status_effect_manager, sprite_manager)

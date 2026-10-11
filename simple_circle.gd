@@ -14,6 +14,8 @@ extends CharacterBody2D
 @onready var knockback_component : KnockbackComponent = core_components.knockback_component
 # @onready var invulnerable_component : InvulnerableComponent = core_components.invulnerable_component
 @onready var sprite_manager : SpriteManager = core_components.sprite_manager
+@onready var material_controller : MaterialController = core_components.material_controller
+
 
 var input_buffer : InputBuffer  = InputBuffer.new()
 var facing_direction : Vector2 = Vector2.ZERO
@@ -56,6 +58,7 @@ func take_damage(damage: int) -> void:
 
 func enter_hurt_state() -> void:
 	# state_machine.set_state(hurt_state)
+	material_controller.damage_flash()
 	pass
 
 func get_initial_health() -> int:

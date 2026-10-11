@@ -56,8 +56,13 @@ func play_frames(frames: Array[int], loop: bool = true) -> void:
 	looping = loop
 	frame = min(hframes * vframes - 1, frame_numbers[current_idx])
 
-func check_is_done() -> bool:
-	return is_done
+func stop() -> void:
+	looping = false
+	frame_numbers = []
+	is_done = true
+
+func check_is_playing() -> bool:
+	return not is_done
 
 func set_flip(is_left: bool) -> void:
 	self.flip_h = is_left

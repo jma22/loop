@@ -3,14 +3,15 @@ extends State
 class_name AttackState
 
 @export var frame_numbers: Array[int]
-@export var hitboxL: HitBox
-@export var hitboxR: HitBox
+@export var swing_L: AttackSwing
+@export var swing_R: AttackSwing
 @export var audio_player: AudioStreamPlayer
 
 var attack_direction: Vector2 = Vector2.ZERO
 var hitbox_frame: int = 1
 var hitbox_duration: float = 0.1
 var hitbox_timer: float = 0.0
+var swing : AttackSwing
 
 # var initial_velocity: float = 400.0
 # var dampening: float = 0.2
@@ -26,33 +27,27 @@ func enter() -> void:
 	# var dir3d := Vector3(attack_direction.x, 0, attack_direction.y * Constants.VERTICAL_PERSRPECTIVE_SCALE).normalized()
 	# var target := entity.global_transform.origin + dir3d * horizontal_distance
 
+	entity.move_velocity = Vector2.ZERO
+	if attack_direction.x < 0:
+		swing = swing_L
+	else:
+		swing = swing_R
+	swing.start()
+
 
 func run(_delta: float) -> void:
-	if entity.sprite_manager.check_is_done():
+	if not swing.swing_is_active():
 		entity.move_velocity = Vector2.ZERO
 		# entity.position.y = 0
 		is_complete = true
 
-func fixed_run(delta: float) -> void:
-	entity.move_velocity = Vector2.ZERO
-	var hitbox: HitBox
-	if attack_direction.x < 0:
-		hitbox = hitboxL
-	else:
-		hitbox = hitboxR
+# func fixed_run(delta: float) -> void:
+	
 	# apply arc velocity to entity
 	# arc_component.tick(delta)
 	# entity.velocity = arc_component.velocity
 
-	if entity.sprite_manager.current_idx == hitbox_frame and not hitbox.is_active:
-		hitbox.set_active(true)
-		# entity.camera_ref.camera_shake(0.1,0.15)
 	
-	if hitbox.is_active:
-		hitbox_timer += delta
-		if hitbox_timer >= hitbox_duration:
-			hitbox.set_active(false)
-			hitbox_timer = 0.0
 
 
 	# entity.velocity *= (1.0 - dampening)

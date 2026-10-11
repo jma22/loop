@@ -32,7 +32,6 @@ func set_owner_entity(_owner : Node2D) -> void:
 	self.owner_entity = _owner
 
 func set_active(active: bool) -> void:
-	print("Hitbox Setting active: ", active)
 	self.set_deferred("monitoring", active)
 	## show visible
 	# if sprite3D:
