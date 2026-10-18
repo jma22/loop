@@ -49,9 +49,6 @@ func fixed_run(_delta: float) -> void:
 		# is_complete = true
 		# return
 	input_vector = entity.get_input()
-
-	var gravity : float = 10.0
-	entity.move_velocity += gravity * Vector2.DOWN
 	# if input_vector.x < 0:
 	# 	entity.sprite_manager.set_flip(true)
 	# elif input_vector.x > 0:

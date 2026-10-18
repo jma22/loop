@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://sqajmwctfb05" path="res://core_components.gd" id="10_k3d1t"]
 [ext_resource type="Texture2D" uid="uid://crjrw08sf6ta5" path="res://attack-Sheet.png" id="12_yc71e"]
 [ext_resource type="Script" uid="uid://dk4n645owpngi" path="res://hitbox.gd" id="12_ytyno"]
+[ext_resource type="Script" uid="uid://bb8648h8b1r15" path="res://air_state.gd" id="13_7m1qc"]
 [ext_resource type="Script" uid="uid://cextj8c8s6ayo" path="res://health_component.gd" id="14_cs1hs"]
 [ext_resource type="Script" uid="uid://b4knadkhl40uk" path="res://InvulnerableComponent.gd" id="15_v7taj"]
 [ext_resource type="Material" uid="uid://iox8q6dxfm7p" path="res://sprite_material.tres" id="16_1uwki"]
@@ -231,6 +232,10 @@ shape = SubResource("RectangleShape2D_cs1hs")
 position = Vector2(4, -2.9999924)
 scale = Vector2(16.000002, 9.99999)
 texture = SubResource("PlaceholderTexture2D_cs1hs")
+
+[node name="AirState" type="Node2D" parent="Node2D/StateMachine" unique_id=1295306979]
+script = ExtResource("13_7m1qc")
+metadata/_custom_type_script = "uid://bb8648h8b1r15"
 
 [node name="CoreComponents" type="Node2D" parent="Node2D" unique_id=141706535]
 script = ExtResource("10_k3d1t")

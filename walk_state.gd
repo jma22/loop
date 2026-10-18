@@ -16,8 +16,6 @@ func fixed_run(_delta: float) -> void:
 		return
 	input_vector = entity.get_input().normalized()
 
-	var gravity : float = 10.0
-	entity.move_velocity += gravity * Vector2.DOWN
 	if input_vector.x < 0:
 		entity.sprite_manager.set_flip(true)
 	elif input_vector.x > 0:
@@ -28,9 +26,14 @@ func get_speed() -> float:
 	return speed * 10
 
 func check_state() -> void:
+	if not entity.is_on_floor():
+		entity.state_machine.set_state(entity.air_state)
+		return
+		
 	var input_vector : Vector2 = entity.get_input()
 	# var did_dash : bool = input_buffer.consume_buffer(&"dash")
 	var did_attack : bool = entity.input_buffer.consume_buffer(&"atk")
+	var did_jump : bool = entity.input_buffer.consume_buffer(&"jump")
 
 	if input_vector.length() > 0:
 		entity.facing_direction = input_vector.normalized()
@@ -43,6 +46,9 @@ func check_state() -> void:
 	if did_attack:
 		entity.combo_parent_state.set_direction(entity.facing_direction)
 		entity.state_machine.set_state(entity.combo_parent_state)
+		return
+	if did_jump:
+		entity.move_velocity.y +=  entity.jump_velocity
 		return
 	# if Input.is_action_just_pressed("ui_accept"):
 	# 	state_machine.set_state(combo_parent_state)

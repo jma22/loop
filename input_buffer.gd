@@ -8,10 +8,13 @@ var _buffer_timer : float = 0.0
 
 
 func tick_buffer(delta : float) -> void:
-    if Input.is_action_just_pressed("ui_accept"):
+    if Input.is_action_just_pressed("attack"):
         _buffered_action = &"atk"
         _buffer_timer = BUFFER_WINDOW
 
+    if Input.is_action_just_pressed("ui_accept"):
+        _buffered_action = &"jump"
+        _buffer_timer = BUFFER_WINDOW
         
     if _buffer_timer > 0.0:
         _buffer_timer -= delta

@@ -21,6 +21,11 @@ var input_buffer : InputBuffer  = InputBuffer.new()
 var facing_direction : Vector2 = Vector2.ZERO
 var move_velocity : Vector2 = Vector2.ZERO
 
+var gravity_enabled : bool = true
+@export var gravity : float = 900.0
+@export var max_fall_speed : float = 400.0
+@export var jump_velocity : float = -290.0
+
 
 
 func _ready() -> void:
@@ -70,13 +75,18 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	# if hitstop.is_in_hitstop or not state_machine.current_state:
 	# 	return
-	print("on the floor" + str(is_on_floor()))
 	state_machine.current_state.deep_fixed_run(delta)
 	knockback_component.handle_knockback(delta)
+	if gravity_enabled and not is_on_floor():
+		move_velocity.y = min(move_velocity.y + gravity * delta, max_fall_speed)
+	# if is_on_floor():
+	# 	move_velocity.y = 0
 	if knockback_component.knockback_velocity.length() > 0:
-		move_velocity = Vector2.ZERO
+		move_velocity.x = 0
 	velocity = move_velocity + knockback_component.knockback_velocity
 	move_and_slide()
+	if is_on_floor():
+		move_velocity.y = 0
 
 
 func take_damage(damage: int) -> void:
