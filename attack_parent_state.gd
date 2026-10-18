@@ -1,0 +1,34 @@
+extends State
+class_name AttackParentState
+
+@export var charge_state : AttackChargeStateBase
+@export var attack_state : State
+@export var cooldown_state : State
+@export var cooldown_mean_time : float = 1.0
+@export var cooldown_variance : float = 0.0
+
+func enter() -> void:
+	charge_state.attack_state = attack_state
+	state_machine.set_state(charge_state, true)
+
+# func exit() -> void:
+# 	state_machine.set_state(charge_state, true)
+
+# func run(_delta: float) -> void:
+# 	check_state()
+
+func check_state() -> void:
+	var child_state : State = get_child_state()
+	if child_state.is_complete:
+		if child_state == charge_state:
+			state_machine.set_state(attack_state)
+		elif child_state == attack_state:
+			cooldown_state.set_idle_duration(sample_cooldown_time())
+			state_machine.set_state(cooldown_state)
+		elif child_state == cooldown_state:
+			is_complete = true
+
+func sample_cooldown_time() -> float:
+	return cooldown_mean_time + randf() * cooldown_variance * 2 - cooldown_variance
+
+			

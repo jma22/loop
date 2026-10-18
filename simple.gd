@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var walk_state : WalkState = $StateMachine/WalkState
 @onready var idle_state : IdleState = $StateMachine/IdleState
 @onready var hurt_state : HurtState = $StateMachine/HurtState
+@onready var air_state : AirState = $StateMachine/AirState
 # @onready var attack_state : AttackState = $StateMachine/AttackState
 @onready var combo_parent_state : ComboParentState = $StateMachine/ComboParentState
 # Called when the node enters the scene tree for the first time.
@@ -20,6 +21,8 @@ var input_buffer : InputBuffer  = InputBuffer.new()
 var facing_direction : Vector2 = Vector2.ZERO
 var move_velocity : Vector2 = Vector2.ZERO
 
+
+
 func _ready() -> void:
 	# hurtbox = $Area2D
 	# hurtbox.area_entered.connect(_on_hurtbox_body_entered)
@@ -29,6 +32,11 @@ func setup() -> void:
 	core_components.setup(self)
 	setup_states()
 	state_machine.set_state(idle_state)
+	Globals.player = self
+
+func _exit_tree() -> void:
+	if Globals.player == self:
+		Globals.player = null
 
 func setup_states() -> void:
 	for state : Node in state_machine.find_children("*", "State", true, false):
@@ -62,8 +70,11 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	# if hitstop.is_in_hitstop or not state_machine.current_state:
 	# 	return
+	print("on the floor" + str(is_on_floor()))
 	state_machine.current_state.deep_fixed_run(delta)
 	knockback_component.handle_knockback(delta)
+	if knockback_component.knockback_velocity.length() > 0:
+		move_velocity = Vector2.ZERO
 	velocity = move_velocity + knockback_component.knockback_velocity
 	move_and_slide()
 
@@ -77,3 +88,6 @@ func enter_hurt_state() -> void:
 
 func get_initial_health() -> int:
 	return 5
+
+func get_look_ahead_point() -> Vector2:
+	return global_position + facing_direction * 12

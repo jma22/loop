@@ -11,18 +11,26 @@ config_version=5
 [application]
 
 config/name="loop"
-run/main_scene="uid://baqtt61aqtda5"
+run/main_scene="uid://blbiyc3i057mr"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*uid://dxq56j6xrslm2"
+
 [display]
 
-window/size/viewport_width=320
-window/size/viewport_height=180
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
+
+[global_group]
+
+player=""
 
 [input]
 

@@ -13,6 +13,7 @@ var hitbox_duration: float = 0.1
 var hitbox_timer: float = 0.0
 var swing : AttackSwing
 
+var speed: float = 0.0
 # var initial_velocity: float = 400.0
 # var dampening: float = 0.2
 # var cutoff_velocity: float = 100.0
@@ -27,7 +28,8 @@ func enter() -> void:
 	# var dir3d := Vector3(attack_direction.x, 0, attack_direction.y * Constants.VERTICAL_PERSRPECTIVE_SCALE).normalized()
 	# var target := entity.global_transform.origin + dir3d * horizontal_distance
 
-	entity.move_velocity = Vector2.ZERO
+	# entity.move_velocity = Vector2.ZERO
+	speed = entity.walk_state.get_speed()
 	if attack_direction.x < 0:
 		swing = swing_L
 	else:
@@ -41,6 +43,20 @@ func run(_delta: float) -> void:
 		# entity.position.y = 0
 		is_complete = true
 
+func fixed_run(_delta: float) -> void:
+	var input_vector : Vector2 = entity.get_input()
+	# if input_vector.length() == 0:
+		# is_complete = true
+		# return
+	input_vector = entity.get_input()
+
+	var gravity : float = 10.0
+	entity.move_velocity += gravity * Vector2.DOWN
+	# if input_vector.x < 0:
+	# 	entity.sprite_manager.set_flip(true)
+	# elif input_vector.x > 0:
+	# 	entity.sprite_manager.set_flip(false)
+	entity.move_velocity.x = input_vector.x * speed
 # func fixed_run(delta: float) -> void:
 	
 	# apply arc velocity to entity

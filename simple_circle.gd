@@ -3,6 +3,8 @@ extends CharacterBody2D
 @onready var state_machine : StateMachine = $StateMachine
 @onready var core_components : CoreComponents = $CoreComponents
 # @onready var walk_state : WalkState = $StateMachine/WalkState
+@onready var circle_pursuit_state : CirclePursuitState = $StateMachine/CirclePursuitState
+@onready var circle_bounce_state : CircleBounceState = $StateMachine/CircleBounceState
 @onready var circle_idle_state : CircleIdleState = $StateMachine/CircleIdleState
 # @onready var hurt_state : HurtState = $StateMachine/HurtState
 # @onready var attack_state : AttackState = $StateMachine/AttackState
@@ -12,7 +14,7 @@ extends CharacterBody2D
 @onready var health_component : HealthComponent = core_components.health_component
 @onready var hurt_box : HurtBox = core_components.hurt_box
 @onready var knockback_component : KnockbackComponent = core_components.knockback_component
-# @onready var invulnerable_component : InvulnerableComponent = core_components.invulnerable_component
+@onready var invulnerable_component : InvulnerableComponent = core_components.invulnerable_component
 @onready var sprite_manager : SpriteManager = core_components.sprite_manager
 @onready var material_controller : MaterialController = core_components.material_controller
 
@@ -42,7 +44,13 @@ func _process(_delta: float) -> void:
 	state_machine.current_state.check_state()
 	state_machine.current_state.deep_run(_delta)
 	if state_machine.current_state.is_complete:
-		state_machine.set_state(circle_idle_state)
+		if state_machine.current_state is CircleIdleState:
+			if randf() < 0.5:
+				state_machine.set_state(circle_bounce_state)
+			else:
+				state_machine.set_state(circle_pursuit_state)
+		else:
+			state_machine.set_state(circle_idle_state)
 
 
 func _physics_process(delta: float) -> void:

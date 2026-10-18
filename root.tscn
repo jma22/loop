@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://blbiyc3i057mr"]
+
+[ext_resource type="PackedScene" uid="uid://baqtt61aqtda5" path="res://base.tscn" id="1_pq8q7"]
+[ext_resource type="Script" uid="uid://lg0piin10oj0" path="res://root.gd" id="1_pyidc"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_pyidc"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Root" type="Node2D" unique_id=1249959705]
+script = ExtResource("1_pyidc")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1191388384]
+snap_2d_transforms_to_pixel = true
+size = Vector2i(320, 180)
+
+[node name="Node2D" parent="SubViewport" unique_id=1168591918 instance=ExtResource("1_pq8q7")]
+
+[node name="Camera2D" type="Camera2D" parent="SubViewport" unique_id=607122933]
+
+[node name="Display" type="Sprite2D" parent="." unique_id=322900609]
+texture_filter = 1
+texture = SubResource("ViewportTexture_pyidc")

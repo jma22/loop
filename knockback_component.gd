@@ -14,7 +14,7 @@ func setup(entity_: Node2D) -> void:
 func handle_knockback(delta: float) -> void: 
 	if not is_knockbackable:
 		return
-	if knockback_velocity.length() > 5.0:
+	if knockback_velocity.length() > 10.0:
 		knockback_velocity *= exp(-knockback_dampening * delta)
 		# entity.position += knockback_velocity
 	else:

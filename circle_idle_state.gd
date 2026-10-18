@@ -2,7 +2,7 @@ extends State
 class_name CircleIdleState
 
 @export var frame_numbers : Array[int]
-var idle_duration : float = 3.0
+var idle_duration : float = 0.4
 
 func enter() -> void:
 	entity.velocity = Vector2.ZERO
@@ -10,9 +10,10 @@ func enter() -> void:
 
 		
 func fixed_run(_delta: float) -> void:
-	var direction : Vector2 = Vector2(-1, 0 )
+	# var direction : Vector2 = Vector2(-1, 0 )
 	# entity.global_position += direction * 1.0 * _delta
-	entity.velocity = direction * 5.0
+	# entity.velocity = direction * 5.0
+	pass
 
 	
 func set_idle_duration(duration: float) -> void:

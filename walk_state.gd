@@ -14,7 +14,7 @@ func fixed_run(_delta: float) -> void:
 	if input_vector.length() == 0:
 		is_complete = true
 		return
-	input_vector = entity.get_input()
+	input_vector = entity.get_input().normalized()
 
 	var gravity : float = 10.0
 	entity.move_velocity += gravity * Vector2.DOWN
@@ -25,7 +25,7 @@ func fixed_run(_delta: float) -> void:
 	entity.move_velocity.x = input_vector.x * get_speed()
 
 func get_speed() -> float:
-	return 100.0
+	return speed * 10
 
 func check_state() -> void:
 	var input_vector : Vector2 = entity.get_input()

@@ -20,6 +20,7 @@ func setup(entity : CharacterBody2D) -> void:
 	# sprite_manager.setup(hitstop)
 	health_component.setup(entity.get_initial_health(), entity)
 	material_controller.setup(sprite_manager)
+	invulnerable_component.setup(entity)
 	# status_effect_manager.setup(entity)
 	# shield_component.setup(entity)
 	# enemy_status_display.setup(status_effect_manager, sprite_manager)
