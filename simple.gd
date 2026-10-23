@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var idle_state : IdleState = $StateMachine/IdleState
 @onready var hurt_state : HurtState = $StateMachine/HurtState
 @onready var air_state : AirState = $StateMachine/AirState
+@onready var dash_state : DashState = $StateMachine/DashState
 # @onready var attack_state : AttackState = $StateMachine/AttackState
 @onready var combo_parent_state : ComboParentState = $StateMachine/ComboParentState
 # Called when the node enters the scene tree for the first time.
@@ -22,6 +23,7 @@ var facing_direction : Vector2 = Vector2.ZERO
 var move_velocity : Vector2 = Vector2.ZERO
 
 var gravity_enabled : bool = true
+var air_dash_available : bool = true
 @export var gravity : float = 900.0
 @export var max_fall_speed : float = 400.0
 @export var jump_velocity : float = -290.0
@@ -87,6 +89,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	if is_on_floor():
 		move_velocity.y = 0
+		air_dash_available = true
 
 
 func take_damage(damage: int) -> void:

@@ -12,6 +12,10 @@ func tick_buffer(delta : float) -> void:
         _buffered_action = &"atk"
         _buffer_timer = BUFFER_WINDOW
 
+    if Input.is_action_just_pressed("dash"):
+        _buffered_action = &"dash"
+        _buffer_timer = BUFFER_WINDOW
+
     if Input.is_action_just_pressed("ui_accept"):
         _buffered_action = &"jump"
         _buffer_timer = BUFFER_WINDOW

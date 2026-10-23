@@ -31,7 +31,7 @@ func check_state() -> void:
 		return
 		
 	var input_vector : Vector2 = entity.get_input()
-	# var did_dash : bool = input_buffer.consume_buffer(&"dash")
+	var did_dash : bool = entity.input_buffer.consume_buffer(&"dash")
 	var did_attack : bool = entity.input_buffer.consume_buffer(&"atk")
 	var did_jump : bool = entity.input_buffer.consume_buffer(&"jump")
 
@@ -42,6 +42,11 @@ func check_state() -> void:
 	# 	state_machine.set_state(roll_state)
 	# 	dash_component.set_dash_cooldown()
 	# 	return
+
+	if did_dash:
+		entity.dash_state.set_direction(entity.facing_direction)
+		entity.state_machine.set_state(entity.dash_state)
+		return
 
 	if did_attack:
 		entity.combo_parent_state.set_direction(entity.facing_direction)
