@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bt2plg27jyhkq"]
+
+[ext_resource type="Script" uid="uid://dkfp7xalem4sc" path="res://juice.gd" id="1_amdaw"]
+[ext_resource type="Texture2D" uid="uid://cxp06qf73pm0m" path="res://goo.png" id="1_weqpt"]
+[ext_resource type="Script" uid="uid://d4kumj5wphpp" path="res://sprite_manager.gd" id="2_amdaw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_weqpt"]
+size = Vector2(4, 4)
+
+[node name="Pickup" type="Node2D" unique_id=2053561013]
+script = ExtResource("1_amdaw")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=2057088004]
+collision_layer = 16384
+collision_mask = 32768
+mass = 0.5
+linear_damp = 3.0
+
+[node name="SpriteManager" type="Sprite2D" parent="RigidBody2D" unique_id=122367233]
+texture = ExtResource("1_weqpt")
+script = ExtResource("2_amdaw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=826270628]
+shape = SubResource("RectangleShape2D_weqpt")

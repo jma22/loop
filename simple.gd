@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var juice_component : JuiceComponent = $JuiceComponent
 @onready var state_machine : StateMachine = $StateMachine
 @onready var core_components : CoreComponents = $CoreComponents
 @onready var walk_state : WalkState = $StateMachine/WalkState
@@ -17,6 +18,7 @@ extends CharacterBody2D
 @onready var sprite_manager : SpriteManager = core_components.sprite_manager
 @onready var knockback_component : KnockbackComponent = core_components.knockback_component
 @onready var material_controller : MaterialController = core_components.material_controller
+
 
 var input_buffer : InputBuffer  = InputBuffer.new()
 var facing_direction : Vector2 = Vector2.ZERO
@@ -38,6 +40,7 @@ func _ready() -> void:
 func setup() -> void:
 	core_components.setup(self)
 	setup_states()
+	juice_component.setup(get_initial_juice(), 0, self)
 	state_machine.set_state(idle_state)
 	Globals.player = self
 
@@ -101,6 +104,9 @@ func enter_hurt_state() -> void:
 
 func get_initial_health() -> int:
 	return 5
+
+func get_initial_juice() -> int:
+	return 10
 
 func get_look_ahead_point() -> Vector2:
 	return global_position + facing_direction * 12

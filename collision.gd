@@ -13,8 +13,10 @@ static func create_collision(hitbox_: HitBox, hurtbox_: HurtBox) -> Collision:
 
 
 func resolve() -> void:
+	print("resolving collision")
 	if hurtbox.get_owner_entity().invulnerable_component.is_currently_invulnerable():
 		return
+	print("hitbox:", hitbox.get_owner_entity(), "hurtbox:", hurtbox.get_owner_entity())
 	# hitbox.get_owner_entity().on_hitbox_hit()
 	var damage : int = hitbox.get_damage()
 	var knockback_right : bool = hitbox.knockback_right
@@ -28,9 +30,9 @@ func resolve() -> void:
 		particle_instance.scale.x = -1
 	particle_instance.get_child(0).restart()
 	
-
-	print(hitbox.get_owner_entity())
-	hitbox.get_owner_entity().knockback_component.receive_knockback(knockback_direction , 1.0)
+	## check if has knockback component
+	if hitbox.get_owner_entity().has_node("knockback_component"):
+		hitbox.get_owner_entity().knockback_component.receive_knockback(knockback_direction , 1.0)
 	
 	## if player gets hit
 	var hit_direction : Vector2 = (hurtbox.get_owner_entity().global_position - hitbox.get_owner_entity().global_position).normalized()

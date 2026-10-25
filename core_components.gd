@@ -18,7 +18,7 @@ func setup(entity : CharacterBody2D) -> void:
 	knockback_component.setup(entity)
 	# bounce_component.setup(entity)
 	# sprite_manager.setup(hitstop)
-	health_component.setup(entity.get_initial_health(), entity)
+	health_component.setup(entity.get_initial_health(), entity.get_initial_health(), entity)
 	material_controller.setup(sprite_manager)
 	invulnerable_component.setup(entity)
 	# status_effect_manager.setup(entity)

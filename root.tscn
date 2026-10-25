@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://blbiyc3i057mr"]
 
 [ext_resource type="PackedScene" uid="uid://baqtt61aqtda5" path="res://base.tscn" id="1_pq8q7"]
-[ext_resource type="Script" uid="uid://lg0piin10oj0" path="res://root.gd" id="1_pyidc"]
+[ext_resource type="Script" uid="uid://jspua72exo6n" path="res://root.gd" id="1_pyidc"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_pyidc"]
 viewport_path = NodePath("SubViewport")

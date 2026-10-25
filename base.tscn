@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://d4kumj5wphpp" path="res://sprite_manager.gd" id="3_8rhti"]
 [ext_resource type="Texture2D" uid="uid://bekhgxb01th5f" path="res://circle.png" id="5_21bcp"]
 [ext_resource type="Script" uid="uid://dg64agt1lh2a8" path="res://state_machine.gd" id="5_42dj3"]
-[ext_resource type="Script" uid="uid://bsldhjv8cdw7e" path="res://simple_circle.gd" id="5_tpea4"]
+[ext_resource type="Script" uid="uid://t8prtfnf4w7c" path="res://simple_circle.gd" id="5_tpea4"]
 [ext_resource type="Script" uid="uid://c5lffweootjxw" path="res://walk_state.gd" id="6_56f15"]
 [ext_resource type="Script" uid="uid://bh3iqs5gdi67a" path="res://idle_state.gd" id="7_cho24"]
 [ext_resource type="Script" uid="uid://cn3n5jlx0acgd" path="res://hurt_state.gd" id="8_dlkme"]
@@ -14,20 +14,24 @@
 [ext_resource type="Script" uid="uid://b4t5hdaxqw7d" path="res://hurtbox.gd" id="9_im64q"]
 [ext_resource type="Script" uid="uid://bo06uaw4p5klq" path="res://combo_parent_state.gd" id="9_sgv64"]
 [ext_resource type="Script" uid="uid://c4kaks2jjb6un" path="res://attack_state.gd" id="10_gaoim"]
-[ext_resource type="Script" uid="uid://bt88wcxlp60sv" path="res://core_components.gd" id="10_k3d1t"]
+[ext_resource type="Script" uid="uid://sqajmwctfb05" path="res://core_components.gd" id="10_k3d1t"]
 [ext_resource type="Texture2D" uid="uid://crjrw08sf6ta5" path="res://attack-Sheet.png" id="12_yc71e"]
-[ext_resource type="Script" uid="uid://bkj2of7bwjtn1" path="res://hitbox.gd" id="12_ytyno"]
+[ext_resource type="Script" uid="uid://dk4n645owpngi" path="res://hitbox.gd" id="12_ytyno"]
 [ext_resource type="Script" uid="uid://bb8648h8b1r15" path="res://air_state.gd" id="13_7m1qc"]
-[ext_resource type="Script" uid="uid://dkrf533g2x7hf" path="res://health_component.gd" id="14_cs1hs"]
+[ext_resource type="Script" uid="uid://cextj8c8s6ayo" path="res://health_component.gd" id="14_cs1hs"]
 [ext_resource type="Script" uid="uid://coyo8jiog0p7x" path="res://dash_state.gd" id="14_mh4ky"]
-[ext_resource type="Script" uid="uid://cgv5ph2kyxsvl" path="res://InvulnerableComponent.gd" id="15_v7taj"]
+[ext_resource type="Script" uid="uid://b4knadkhl40uk" path="res://InvulnerableComponent.gd" id="15_v7taj"]
 [ext_resource type="Material" uid="uid://iox8q6dxfm7p" path="res://sprite_material.tres" id="16_1uwki"]
 [ext_resource type="Script" uid="uid://y5wkq7ycra2l" path="res://knockback_component.gd" id="16_50rgw"]
-[ext_resource type="Script" uid="uid://pkn0e034aah" path="res://hp_display.gd" id="16_n73o2"]
+[ext_resource type="Script" uid="uid://cv1ooydccgfs8" path="res://hp_display.gd" id="16_n73o2"]
 [ext_resource type="Script" uid="uid://dp82kswd3sujv" path="res://circle_idle_state.gd" id="18_jym3p"]
 [ext_resource type="Script" uid="uid://go4n88db7pqj" path="res://material_controller.gd" id="22_wudxj"]
+[ext_resource type="Script" uid="uid://csdnsulohepb4" path="res://juice_component.gd" id="23_2bbbl"]
 [ext_resource type="Script" uid="uid://ductolci4ili2" path="res://circle_bounce_state.gd" id="24_2btif"]
 [ext_resource type="Script" uid="uid://c763kr4acwken" path="res://circle_pursuit_state.gd" id="24_n0uqe"]
+[ext_resource type="PackedScene" uid="uid://bt2plg27jyhkq" path="res://pickup.tscn" id="29_x13uo"]
+[ext_resource type="Script" uid="uid://dnummkyef4bj3" path="res://pickup_spawner.gd" id="30_3vupj"]
+[ext_resource type="Script" uid="uid://cfesfngfuyobe" path="res://mover.gd" id="32_d5d72"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c1ibt"]
 size = Vector2(637, 18)
@@ -71,6 +75,10 @@ point_count = 2
 [sub_resource type="CircleShape2D" id="CircleShape2D_v7taj"]
 radius = 3.1622777
 
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d5d72"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5d72"]
+
 [node name="Node2D" type="Node2D" unique_id=1168591918]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1958491882]
@@ -101,9 +109,12 @@ shape = SubResource("RectangleShape2D_c1ibt")
 
 [node name="Node2D" type="CharacterBody2D" parent="." unique_id=1432218635 groups=["player"]]
 position = Vector2(100, 100)
-collision_layer = 32769
 collision_mask = 32769
 script = ExtResource("2_3vi8l")
+
+[node name="JuiceComponent" type="Node2D" parent="Node2D" unique_id=283339292 node_paths=PackedStringArray("hp_display")]
+script = ExtResource("23_2bbbl")
+hp_display = NodePath("../../UI/VBoxContainer2/MarginContainer2/ProgressBar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D" unique_id=905226209]
 position = Vector2(0, 2)
@@ -324,6 +335,11 @@ script = ExtResource("24_n0uqe")
 [node name="CircleBounceState" type="Node2D" parent="Circle/StateMachine" unique_id=7420801]
 script = ExtResource("24_2btif")
 
+[node name="PickupSpawner" type="Node2D" parent="Circle" unique_id=1698794986]
+position = Vector2(-133, -103)
+script = ExtResource("30_3vupj")
+pickup_scene = ExtResource("29_x13uo")
+
 [node name="UI" type="CanvasLayer" parent="." unique_id=881851114]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=220193623]
@@ -376,16 +392,39 @@ size_flags_vertical = 4
 show_percentage = false
 script = ExtResource("16_n73o2")
 
+[node name="MarginContainer2" type="MarginContainer" parent="UI/VBoxContainer2" unique_id=1059319587]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 250
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/VBoxContainer2/MarginContainer2" unique_id=1363996867]
+layout_mode = 2
+size_flags_vertical = 4
+show_percentage = false
+script = ExtResource("16_n73o2")
+
 [node name="Control2" type="Control" parent="UI/VBoxContainer2" unique_id=1144939268]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 11.0
 
-[node name="Pickup" type="Node2D" parent="." unique_id=2124745800]
+[node name="Pickup" parent="." unique_id=2053561013 instance=ExtResource("29_x13uo")]
 
-[node name="SpriteManager" type="Sprite2D" parent="Pickup" unique_id=1538390430]
+[node name="MovingHurtbox" type="Node2D" parent="." unique_id=141877711]
+position = Vector2(210, 101)
+
+[node name="Mover" type="Node2D" parent="MovingHurtbox" unique_id=1480156143]
+script = ExtResource("32_d5d72")
+
+[node name="SpriteManager" type="Sprite2D" parent="MovingHurtbox" unique_id=1333547839]
+scale = Vector2(0.05, 0.05)
+texture = SubResource("NoiseTexture2D_d5d72")
 script = ExtResource("3_8rhti")
 
-[node name="Area2D" type="Area2D" parent="Pickup" unique_id=931051077]
+[node name="HitBox" type="Area2D" parent="MovingHurtbox" unique_id=761415727 node_paths=PackedStringArray("owner_entity")]
+script = ExtResource("12_ytyno")
+owner_entity = NodePath("..")
+start_active = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup/Area2D" unique_id=1067466865]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MovingHurtbox/HitBox" unique_id=738277909]
+shape = SubResource("RectangleShape2D_d5d72")

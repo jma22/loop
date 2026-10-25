@@ -30,7 +30,6 @@ func check_state() -> void:
 	var did_dash : bool = entity.input_buffer.consume_buffer(&"dash")
 	var did_attack : bool = entity.input_buffer.consume_buffer(&"atk")
 	var did_jump : bool = entity.input_buffer.consume_buffer(&"jump")
-	print("jump " + str(did_jump))
 	if input_vector.length() > 0:
 		entity.facing_direction = input_vector.normalized()
 	# if did_dash and dash_component.can_dash():

@@ -11,10 +11,10 @@ func setup(entity: Node2D) -> void:
 func set_invulnerable(value: bool, duration: float = 0.0) -> void:
 	is_invulnerable = value
 	invulnerability_timer = duration
-	## 1 and 16 on 
+	## 1 and 16 on. 16 is floor
 	if value:
-		entity.set_collision_layer_value(0, false)
-	else:
+		entity.set_collision_layer_value(0, false) ## 1 is player layer
+	else: 
 		entity.set_collision_layer_value(0, true)
 	print("Invulnerable: ", is_invulnerable, " Duration: ", invulnerability_timer)
 

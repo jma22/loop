@@ -18,6 +18,7 @@ extends CharacterBody2D
 @onready var sprite_manager : SpriteManager = core_components.sprite_manager
 @onready var material_controller : MaterialController = core_components.material_controller
 
+@onready var pickup_spawner : PickupSpawner = $PickupSpawner
 
 var input_buffer : InputBuffer  = InputBuffer.new()
 var facing_direction : Vector2 = Vector2.ZERO
@@ -50,6 +51,7 @@ func _process(_delta: float) -> void:
 			else:
 				state_machine.set_state(circle_pursuit_state)
 		else:
+			pickup_spawner.spawn_pickup(global_position)
 			state_machine.set_state(circle_idle_state)
 
 
