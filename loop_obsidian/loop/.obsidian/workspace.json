@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "2026-10-24"
             }
+          },
+          {
+            "id": "0ad220ab76f93046",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2026-11-08.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2026-11-08"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "430cc2597cd0ed06",
@@ -205,8 +220,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "4ee832cf797eab83",
+  "active": "0ad220ab76f93046",
   "lastOpenFiles": [
+    "2026-11-02.md",
+    "2026-11-08.md",
+    "Untitled.canvas",
     "2026-10-17.md",
     "2026-10-24.md",
     "Welcome.md",
